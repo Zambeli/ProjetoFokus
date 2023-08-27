@@ -8,10 +8,10 @@ const botoes = document.querySelectorAll('.app__card-button')
 const startPauseBt = document.querySelector('#start-pause')
 const inputMusic = document.querySelector('#alternar-musica')
 
-const alarme = new Audio('sons/beep.mp3')
-const pauseBt = new Audio('/sons/pause.mp3')
-const playBt = new Audio('/sons/play.wav')
-const music = new Audio('/sons/luna-rise-part-one.mp3')
+const alarme = new Audio('./sons/beep.mp3')
+const pauseBt = new Audio('./sons/pause.mp3')
+const playBt = new Audio('./sons/play.wav')
+const music = new Audio('./sons/luna-rise-part-one.mp3')
 music.loop = true
 
 let tempoDecorridoEmSegundos = 5
@@ -42,7 +42,7 @@ longoBt.addEventListener('click', () => {
 
 function AlterarAtributos (atributo) {
     html.setAttribute('data-contexto', atributo)
-    imagem.setAttribute('src',`/imagens/${atributo}.png`)
+    imagem.setAttribute('src',`./imagens/${atributo}.png`)
     botoes.forEach((botao) => {
         botao.classList.remove('active')
     })
