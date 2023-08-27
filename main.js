@@ -32,39 +32,41 @@ focoBt.addEventListener('click', () => {
     tempoDecorridoEmSegundos = 1500
     AlterarAtributos('foco')
     focoBt.classList.add('active')
+    imagem.setAttribute('src',`./imagens/animeestudando.png`)
 })
 
 curtoBt.addEventListener('click', () => {
     tempoDecorridoEmSegundos = 300
     AlterarAtributos('descanso-curto')
     curtoBt.classList.add('active')
+    imagem.setAttribute('src',`./imagens/animecurto.png`)
 })
 
 longoBt.addEventListener('click', () => {
     tempoDecorridoEmSegundos = 900
     AlterarAtributos('descanso-longo')
     longoBt.classList.add('active')
+    imagem.setAttribute('src',`./imagens/animedescansando.webp`)
 })
 
 function AlterarAtributos (atributo) {
     mostrarTempo()
     html.setAttribute('data-contexto', atributo)
-    imagem.setAttribute('src',`./imagens/${atributo}.png`)
     botoes.forEach((botao) => {
         botao.classList.remove('active')
     })
     switch (atributo) {
         case 'foco':
-            titulo.innerHTML = `Otimize sua produtividade,<br>
-            <strong class="app__title-strong">mergulhe no que importa.</strong>`
+            titulo.innerHTML = `Deixe de amolar<br>
+            <strong class="app__title-strong">e vai estudar!</strong>`
             break;
         case 'descanso-curto':
             titulo.innerHTML = `Que tal dar uma respirada?<br>
-            <strong class="app__title-strong">Faça uma pausa curta!</strong>`
+            <strong class="app__title-strong">Nos veremos em Breve!</strong>`
             break
         case 'descanso-longo':
-            titulo.innerHTML = `Hora de voltar à superfície.<br>
-            <strong class="app__title-strong">Faça uma pausa longa.</strong>`
+            titulo.innerHTML = `Você Merece um descanso<br>
+            <strong class="app__title-strong">até Logo!</strong>`
         default:
             break;
     }
