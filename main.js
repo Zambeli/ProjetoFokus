@@ -7,6 +7,9 @@ const titulo = document.querySelector('.app__title')
 const botoes = document.querySelectorAll('.app__card-button')
 const startPauseBt = document.querySelector('#start-pause')
 const inputMusic = document.querySelector('#alternar-musica')
+const iniciarOuPausarBt = document.querySelector('#start-pause span')
+const imagemBotao = document.querySelector('.app__card-primary-butto-icon')
+const tempoNaTela = document.querySelector('#timer')
 
 const alarme = new Audio('./sons/beep.mp3')
 const pauseBt = new Audio('./sons/pause.mp3')
@@ -14,7 +17,7 @@ const playBt = new Audio('./sons/play.wav')
 const music = new Audio('./sons/luna-rise-part-one.mp3')
 music.loop = true
 
-let tempoDecorridoEmSegundos = 5
+let tempoDecorridoEmSegundos = 1500
 let intervaloId = null
 
 inputMusic.addEventListener('change', () => {
@@ -26,21 +29,25 @@ inputMusic.addEventListener('change', () => {
 })
 
 focoBt.addEventListener('click', () => {
+    tempoDecorridoEmSegundos = 1500
     AlterarAtributos('foco')
     focoBt.classList.add('active')
 })
 
 curtoBt.addEventListener('click', () => {
+    tempoDecorridoEmSegundos = 300
     AlterarAtributos('descanso-curto')
     curtoBt.classList.add('active')
 })
 
 longoBt.addEventListener('click', () => {
+    tempoDecorridoEmSegundos = 900
     AlterarAtributos('descanso-longo')
     longoBt.classList.add('active')
 })
 
 function AlterarAtributos (atributo) {
+    mostrarTempo()
     html.setAttribute('data-contexto', atributo)
     imagem.setAttribute('src',`./imagens/${atributo}.png`)
     botoes.forEach((botao) => {
@@ -66,11 +73,12 @@ function AlterarAtributos (atributo) {
 const contagemRegressiva = () => {
     if (tempoDecorridoEmSegundos <= 0) {
         alarme.play()
+        alert('Tempo Finalizado')
         zerar()
         return
     } 
     tempoDecorridoEmSegundos -= 1
-    console.log('Temporizador' + tempoDecorridoEmSegundos)
+    mostrarTempo()
 }
 
 startPauseBt.addEventListener('click', iniciarOuPausar)
@@ -78,14 +86,26 @@ startPauseBt.addEventListener('click', iniciarOuPausar)
 function iniciarOuPausar () {
     if (intervaloId) {
         pauseBt.play()
+        imagemBotao.setAttribute('src','./imagens/pause.png')
         zerar()
         return
     }
     playBt.play()
+    imagemBotao.setAttribute('src','./imagens/play_arrow.png')
     intervaloId = setInterval(contagemRegressiva,1000)
+    iniciarOuPausarBt.textContent = 'Pausar'
 }
 
 function zerar () {
     clearInterval(intervaloId)
+    iniciarOuPausarBt.textContent = 'Começar'
     intervaloId = null
 }
+
+function mostrarTempo() {
+    const tempo = new Date(tempoDecorridoEmSegundos * 1000)
+    const tempoFormatado = tempo.toLocaleTimeString('pt-Br', {minute: '2-digit', second: '2-digit'})
+    tempoNaTela.innerHTML = `${tempoFormatado}`
+}
+
+mostrarTempo()
